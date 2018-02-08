@@ -12,11 +12,13 @@
 
 <body>
   <script src="/javascripts/pixi.min.js"></script>
+  <script src="/javascripts/models/colour.js"></script>
+  <script src="/javascripts/models/creaturefactory.js"></script>
   <script type="text/javascript">
     //Create a Pixi Application
     let app = new PIXI.Application();
 
-    app.renderer.backgroundColor = 0xefefef;
+    app.renderer.backgroundColor = new DLColour(64, 164, 223, 1).toHex();
     app.renderer.view.style.position = "absolute";
     app.renderer.view.style.display = "block";
     app.renderer.autoResize = true;
@@ -24,60 +26,27 @@
     //Add the canvas that Pixi automatically created for you to the HTML document
     document.body.appendChild(app.view);
 
-    //load an image and run the `setup` function when it's done
     PIXI.loader
       .add("/images/animals.json")
       .load(setup);
-
-    let animal_cell;
-    //This `setup` function will run when the image has loaded
+    //load an image and run the `setup` function when it's done
     function setup() {
 
-      var frames = [];
+      creatures = [];
 
-      for (let i = 0; i < 5; i++) {
-        frames.push(PIXI.Texture.fromFrame('frame0' + i + '.png'));
+      for (let i = 0; i < 64; i++) {
+        creatures[i] = NewCreature();
       }
 
-      var anim = new PIXI.extras.AnimatedSprite(frames);
-      anim.x = app.screen.width / 2;
-      anim.y = app.screen.height / 2;
-      anim.anchor.set(0.5);
-      anim.animationSpeed = 0.3;
-      anim.play();
-      anim.height = 64;
-      anim.width = 64;
-      anim.tint = 0xFF00F0;
-      anim.vx = -1.5;
-      anim.vy = -1.5;
-      app.stage.addChild(anim);
+      creatures.forEach(creature => {
+        app.stage.addChild(creature);
+      });
 
       // Animate the rotation
       app.ticker.add(function () {
-        // anim.rotation += 0.01;
-        anim.x += anim.vx;
-        anim.y += anim.vy;
-
-        if (anim.x < anim.width / 2) {
-          anim.x == 0;
-          anim.vx *= -1;
-        }
-
-        if (anim.x > app.screen.width - (anim.width / 2)) {
-          anim.x == app.screen.width;
-          anim.vx *= -1;
-        }
-
-        if (anim.y < anim.height / 2) {
-          anim.y == 0;
-          anim.vy *= -1;
-        }
-
-        if (anim.y > app.screen.height - (anim.height / 2)) {
-          anim.y == app.screen.height;
-          anim.vy *= -1;
-        }
-
+        creatures.forEach(creature => {
+          creature.travel();
+        });
       });
     }
 
