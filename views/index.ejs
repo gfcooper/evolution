@@ -6,51 +6,26 @@
   <title>
     <%= title %>
   </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <link rel='stylesheet' href='/stylesheets/style.css' />
-
 </head>
 
 <body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- <div id="console" class="col-lg-4"></div> -->
+      <div id="app" class="col-lg-12"></div>
+    </div>
+  </div>
   <script src="/javascripts/pixi.min.js"></script>
   <script src="/javascripts/models/colour.js"></script>
   <script src="/javascripts/models/creaturefactory.js"></script>
-  <script type="text/javascript">
-    //Create a Pixi Application
-    let app = new PIXI.Application();
-
-    app.renderer.backgroundColor = new DLColour(64, 164, 223, 1).toHex();
-    app.renderer.view.style.position = "absolute";
-    app.renderer.view.style.display = "block";
-    app.renderer.autoResize = true;
-    app.renderer.resize(window.innerWidth, window.innerHeight);
-    //Add the canvas that Pixi automatically created for you to the HTML document
-    document.body.appendChild(app.view);
-
-    PIXI.loader
-      .add("/images/animals.json")
-      .load(setup);
-    //load an image and run the `setup` function when it's done
-    function setup() {
-
-      creatures = [];
-
-      for (let i = 0; i < 64; i++) {
-        creatures[i] = NewCreature();
-      }
-
-      creatures.forEach(creature => {
-        app.stage.addChild(creature);
-      });
-
-      // Animate the rotation
-      app.ticker.add(function () {
-        creatures.forEach(creature => {
-          creature.travel();
-        });
-      });
-    }
-
-  </script>
+  <script src="/javascripts/simulation.js"></script>
 </body>
 
 </html>
