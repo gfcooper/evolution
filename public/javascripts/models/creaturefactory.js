@@ -1,6 +1,6 @@
 var ccount = 0;
 
-class DLCreaturs {
+class DLCreaturesFactory {
   constructor() {
     this.creatures = 0;
     this.predators = 0;
@@ -14,7 +14,7 @@ class DLCreaturs {
     var frames = [];
 
     for (let i = 0; i < 5; i++) {
-      frames.push(PIXI.Texture.fromFrame('frame0' + i + '.png'));
+      frames.push(PIXI.Texture.fromFrame('creature_' + i + '.png'));
     }
 
     ccount++;
@@ -56,7 +56,7 @@ class DLCreaturs {
       anim.alive = false;
     }
 
-    anim.travel = () => {
+    anim.update = () => {
 
       if (anim.alive) {
 

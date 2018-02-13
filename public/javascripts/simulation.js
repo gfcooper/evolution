@@ -1,6 +1,6 @@
 //Create a Pixi Application
 let display = document.getElementById('app');
-let creatureCount = 64, predatorCount = 3;
+let creatureCount = 20, predatorCount = 3;
 
 let app = new PIXI.Application({ width: $("#app").width(), height: window.innerHeight - 64 });
 // let app = new PIXI.Application();
@@ -15,7 +15,7 @@ PIXI.loader
   .load(setup);
 
 function setup() {
-  factory = new DLCreaturs();
+  factory = new DLCreaturesFactory();
   let creatures = [];
   let predators = [];
 
@@ -42,7 +42,7 @@ function setup() {
   app.ticker.add(function () {
 
     creatures.forEach(creature => {
-      creature.travel();
+      creature.update();
     });
 
     predators.forEach(predator => {
