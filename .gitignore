@@ -1,2 +1,5 @@
 RESOURCES/
 node_modules/
+public/stylesheets/style.css
+bower.json
+gulpfile.js
