@@ -5,3 +5,4 @@ bower.json
 gulpfile.js
 *.css
 package-lock.json
+.editorconfig
