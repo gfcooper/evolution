@@ -9,109 +9,94 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script>
+    var CONFIG = {
+      birthRate: 112,
+      predationRate: 40,
+      env: { red: 235, green: 35, blue: 35 },
+      avg: { red: 128, green: 128, blue: 128 }
+    }
+    $(function () {
+      $("#birthSlide").slider({
+        value: CONFIG.birthRate,
+        min:10,
+        max: 450,
+        create: function (event, ui) {
+          $("#birthRate").html(CONFIG.birthRate);
+        },
+        change: function (event, ui) {
+          CONFIG.birthRate = ui.value;
+        },
+        slide: function (event, ui) {
+          $("#birthRate").html(ui.value);
+        }
+      });
+      $("#predationSlide").slider({
+        value: CONFIG.predationRate,
+        min: 2,
+        max: 62,
+        create: function (event, ui) {
+          $("#predationRate").html(CONFIG.predationRate);
+        },
+        change: function (event, ui) {
+          CONFIG.predationRate = ui.value;
+        },
+        slide: function (event, ui) {
+          $("#predationRate").html(ui.value);
+        }
+      });
+    });
+  </script>
 </head>
 
 <body>
   <div class="container-fluid">
     <div class="row">
-      <div id="console" class="col-lg-5">
-        <div class="row">
-            <p class="lead">
-                Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.
-              </p>
+      <div id="cpanel" class="col-lg-4">
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container">
+            <h1 class="display-4">Evolved</h1>
+            <p class="lead">By Dev-Leopard</p>
+          </div>
         </div>
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="list-group">
-              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
-                <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">List group item heading</h5>
-                  <small>3 days ago</small>
-                </div>
-                <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                <small>Donec id elit non mi porta.</small>
-              </a>
-              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">List group item heading</h5>
-                  <small class="text-muted">3 days ago</small>
-                </div>
-                <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                <small class="text-muted">Donec id elit non mi porta.</small>
-              </a>
-              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">List group item heading</h5>
-                  <small class="text-muted">3 days ago</small>
-                </div>
-                <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                <small class="text-muted">Donec id elit non mi porta.</small>
-              </a>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6">
+              <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Birth Rate
+                  <span id="birthRate" class="badge badge-primary badge-pill">14</span>
+                </li>
+                <li id="birthSlide"></li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Predation Rate
+                  <span id="predationRate" class="badge badge-primary badge-pill">14</span>
+                </li>
+                <li id="predationSlide"></li>
+              </ul>
             </div>
           </div>
         </div>
-        <!-- <div class="row">
-          <div class="col-lg-6">
-            <div class="container">
-            <ul class="list-group">
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Cras justo odio
-                <span class="badge badge-primary badge-pill">14</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Dapibus ac facilisis in
-                <span class="badge badge-primary badge-pill">2</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Morbi leo risus
-                <span class="badge badge-primary badge-pill">1</span>
-              </li>
-            </ul>
-          </div>
-          </div>
-          <div class="col-lg-6">
-              <canvas id="myChart" width="400" height="200"></canvas>
-          </div>
-        </div> -->
+        <div class="container">
+          <canvas id="myChart" style="background-color: whitesmoke;"></canvas>
+        </div>
       </div>
-      <div id="app" class="col-lg-7"></div>
+      <div id="app" class="col-lg-8"></div>
     </div>
   </div>
+  <script src="/javascripts/report.js"></script>
   <script src="/javascripts/pixi.min.js"></script>
   <script src="/javascripts/models/colour.js"></script>
+  <script src="/javascripts/models/creature.js"></script>
   <script src="/javascripts/models/creaturefactory.js"></script>
   <script src="/javascripts/simulation.js"></script>
-
-  <!-- <script>
-    var ctx = document.getElementById("myChart").getContext('2d');
-    var myChart = new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        // labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [{
-          label: '# of Votes',
-          data: [30, 45, 25],
-          backgroundColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(75, 192, 192, 1)'
-          ],
-          borderColor: [
-            'rgba(0, 0, 0, .8)',
-            'rgba(0, 0, 0, .8)',
-            'rgba(0, 0, 0, .8)'
-          ],
-          borderWidth: 1
-        }]
-      }
-    });
-  </script> -->
-
 </body>
 
 </html>

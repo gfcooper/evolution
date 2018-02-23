@@ -1,10 +1,12 @@
-//Create a Pixi Application
-let display = document.getElementById('app');
-let creatureCount = 20, predatorCount = 3;
+let display = document.getElementById("app");
+let creatureCount = 32,
+  predatorCount = 3;
 
-let app = new PIXI.Application({ width: $("#app").width(), height: window.innerHeight - 64 });
-// let app = new PIXI.Application();
-var appBackgroundColor = new DLColour(240, 255, 240, 1);
+let app = new PIXI.Application({
+  width: $("#app").width(),
+  height: window.innerHeight - 64
+});
+var appBackgroundColor = new DLColour(CONFIG.env.red, CONFIG.env.green, CONFIG.env.blue, 1);
 app.renderer.backgroundColor = appBackgroundColor.toHex();
 
 display.appendChild(app.view);
@@ -21,15 +23,14 @@ function setup() {
 
   for (let i = 0; i < creatureCount; i++) {
     creatures[i] = factory.NewCreature();
+    creatures[i].play();
   }
 
-  predators[0] = factory.NewPredator('R');
-  predators[1] = factory.NewPredator('G');
-  predators[2] = factory.NewPredator('B');
-  predators[3] = factory.NewPredator('R');
-  predators[4] = factory.NewPredator('G');
-  predators[5] = factory.NewPredator('B');
-
+  for (let i = 0; i < predatorCount; i++) {
+    predators.push(factory.NewPredator("R"));
+    predators.push(factory.NewPredator("G"));
+    predators.push(factory.NewPredator("B"));
+  }
 
   creatures.forEach(creature => {
     app.stage.addChild(creature);
@@ -39,15 +40,49 @@ function setup() {
     app.stage.addChild(predator);
   });
 
-  app.ticker.add(function () {
+  app.ticker.add(function() {
+
+    let offspring = [];
+
+    for (let i = 0; i < creatures.length; i++) {
+      if (creatures[i].decayed) {
+        app.stage.removeChild(creatures[i]);
+        creatures.splice(i, 1);
+      }
+    }
+
+    let ccount = creatures.length;
+    CONFIG.avg.red = 0;
+    CONFIG.avg.green = 0;
+    CONFIG.avg.blue = 0;
 
     creatures.forEach(creature => {
-      creature.update();
+      creature.update(ccount, CONFIG.birthRate);
+      for (let i = 0; i < creature.offspring.length; i++) {
+        offspring.push(creature.offspring.pop());
+      };
+      CONFIG.avg.red += creature.colour.red;
+      CONFIG.avg.green += creature.colour.green;
+      CONFIG.avg.blue += creature.colour.blue;
     });
+
+    CONFIG.avg.red = CONFIG.avg.red / ccount;
+    CONFIG.avg.green = CONFIG.avg.green / ccount;
+    CONFIG.avg.blue = CONFIG.avg.blue / ccount;
+
+    chart.data.datasets[1].data = [CONFIG.avg.red, CONFIG.avg.green, CONFIG.avg.blue];
+    chart.update();
+
+    offspring.forEach(creature => {
+      app.stage.addChild(creature);
+    });
+
+    for (let i = 0; i < offspring.length; i++) {
+      creatures.push(offspring.pop());
+    }
 
     predators.forEach(predator => {
-      predator.update(creatures);
+      predator.update(creatures, CONFIG.predationRate);
     });
-
   });
 }

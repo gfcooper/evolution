@@ -3,3 +3,5 @@ node_modules/
 public/stylesheets/style.css
 bower.json
 gulpfile.js
+*.css
+package-lock.json
