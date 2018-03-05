@@ -1,12 +1,14 @@
 let display = document.getElementById("app");
-let creatureCount = 32,
-  predatorCount = 3;
+
+let creatureCount = 32, predatorCount = 3;
 
 let app = new PIXI.Application({
   width: $("#app").width(),
   height: window.innerHeight - 64
 });
+
 var appBackgroundColor = new DLColour(CONFIG.env.red, CONFIG.env.green, CONFIG.env.blue, 1);
+
 app.renderer.backgroundColor = appBackgroundColor.toHex();
 
 display.appendChild(app.view);
@@ -21,12 +23,11 @@ function setup() {
   let creatures = [];
   let predators = [];
 
-  for (let i = 0; i < creatureCount; i++) {
+  for (let i = 0; i < CONFIG.prey; i++) {
     creatures[i] = factory.NewCreature();
-    creatures[i].play();
   }
 
-  for (let i = 0; i < predatorCount; i++) {
+  for (let i = 0; i < CONFIG.predators; i++) {
     predators.push(factory.NewPredator("R"));
     predators.push(factory.NewPredator("G"));
     predators.push(factory.NewPredator("B"));

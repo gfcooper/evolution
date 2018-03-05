@@ -9,7 +9,9 @@ class DLCreaturesFactory {
   BaseCreature() {}
 
   NewCreature() {
+    
     this.creatures++;
+    
     var frames = [];
 
     for (let i = 0; i < 5; i++) {
@@ -21,6 +23,7 @@ class DLCreaturesFactory {
     var anim = new CreatureAnimated(frames, ccount);
 
     return anim;
+
   }
 
   NewPredator(predtype) {
