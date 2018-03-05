@@ -24,9 +24,7 @@ class CreatureAnimated extends PIXI.extras.AnimatedSprite {
     this.alive = false;
     this.animationSpeed = 0;
     this.alpha = .3;
-    this.offspring.forEach(element => {
-      element.die();
-    });
+    this.offspring = [];
   }
 
   // Add the creature to a random point in the env.
@@ -79,7 +77,7 @@ class CreatureAnimated extends PIXI.extras.AnimatedSprite {
       this.rval = RandInt(-4, 4) / 100;
     }
 
-    // this.play();
+    this.play();
   }
 
   // Set's the difference between the animal and the env colours
@@ -149,25 +147,22 @@ class CreatureAnimated extends PIXI.extras.AnimatedSprite {
   }
 
   // Update the animal during each frame.
-  update(ccount, bRate, dRate) {
+  update(ccount, bRate) {
+
     if (this.alive) {
       this.reproduce(bRate * 10);
 
       this.move();
 
-      this.expire(dRate * 10);
     } else {
+
       this.tint = 0xffffff;
 
-      if (this.y < app.screen.height) {
+      if ((this.y - this.height / 2) < app.screen.height) {
         this.y += 0.5;
+      } else {
+        this.decayed = true;
       }
-
-      // this.y += 0.5;
-
-      // if (this.y > app.screen.width - 128) {
-      //   this.decayed = true;
-      // }
     }
   }
 

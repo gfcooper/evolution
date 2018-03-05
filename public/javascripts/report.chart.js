@@ -8,7 +8,6 @@ var chart = new Chart(ctx, {
     labels: ["Red", "Green", "Blue"],
     datasets: [
       {
-        label: "My First dataset",
         backgroundColor: [
           "rgba(255, 0, 0, 0.2)",
           "rgba(0, 255, 0, 0.2)",
@@ -38,5 +37,20 @@ var chart = new Chart(ctx, {
   },
 
   // Configuration options go here
-  options: {}
+  options: {
+    legend: {
+      display: false
+    },
+    tooltips: {
+      enabled: false
+    },
+    scales: {
+      yAxes: [
+        {
+          display: true,
+          ticks: { min: 0, max: 255 }
+        }
+      ]
+    }
+  }
 });

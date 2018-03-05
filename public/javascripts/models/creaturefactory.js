@@ -75,7 +75,7 @@ class DLCreaturesFactory {
       anim.energy = RandInt(minRate, Math.pow(minRate / 2, 2.2));
     };
 
-    anim.setEnergy(CONFIG.predationRate);
+    anim.setEnergy(CONFIG.pRate);
 
     anim.preyInRange = [];
 

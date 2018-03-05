@@ -46,7 +46,7 @@ function setup() {
     let offspring = [];
 
     for (let i = 0; i < creatures.length; i++) {
-      if (creatures[i].decayed) {
+      if (!creatures[i].alive) {
         app.stage.removeChild(creatures[i]);
         creatures.splice(i, 1);
       }
@@ -58,7 +58,7 @@ function setup() {
     CONFIG.avg.blue = 0;
 
     creatures.forEach(creature => {
-      creature.update(ccount, CONFIG.birthRate);
+      creature.update(ccount, CONFIG.bRate);
       for (let i = 0; i < creature.offspring.length; i++) {
         offspring.push(creature.offspring.pop());
       };
@@ -83,7 +83,7 @@ function setup() {
     }
 
     predators.forEach(predator => {
-      predator.update(creatures, CONFIG.predationRate);
+      predator.update(creatures, CONFIG.pRate);
     });
   });
 }
