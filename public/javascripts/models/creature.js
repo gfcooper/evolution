@@ -3,7 +3,7 @@ class CreatureAnimated extends PIXI.extras.AnimatedSprite {
     super(args[0]);
     this.image = args[0];
     this.setLocation();
-    this.setLocomotion();
+    this.setVelocity();
     this.setColour(args[2]);
     this.initialisePIXI();
     this.setVisibility();
@@ -34,7 +34,7 @@ class CreatureAnimated extends PIXI.extras.AnimatedSprite {
   }
 
   // Set the velocity of the animal.
-  setLocomotion() {
+  setVelocity() {
     this.vx = 0;
     while (this.vx === 0) {
       this.vx = RandInt(-1, 1);
@@ -67,7 +67,7 @@ class CreatureAnimated extends PIXI.extras.AnimatedSprite {
 
     this.anchor.set(0.5);
 
-    this.animationSpeed = 0.5; //RandInt(20, 100) / 100;
+    this.animationSpeed = 1; //RandInt(20, 100) / 100;
 
     this.tint = this.colour.toHex();
 

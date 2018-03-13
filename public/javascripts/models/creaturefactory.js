@@ -14,7 +14,7 @@ class DLCreaturesFactory {
     
     var frames = [];
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 4; i++) {
       frames.push(PIXI.Texture.fromFrame("creature_" + i + ".png"));
     }
 
