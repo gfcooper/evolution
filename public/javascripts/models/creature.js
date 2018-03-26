@@ -77,7 +77,7 @@ class CreatureAnimated extends PIXI.extras.AnimatedSprite {
       this.rval = RandInt(-4, 4) / 100;
     }
 
-    this.play();
+    // this.play();
   }
 
   // Set's the difference between the animal and the env colours

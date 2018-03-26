@@ -16,7 +16,6 @@ var appBackgroundColor = new DLColour(
 );
 
 app.renderer.backgroundColor = appBackgroundColor.toHex();
-
 display.appendChild(app.view);
 
 PIXI.loader
@@ -25,8 +24,6 @@ PIXI.loader
   .load(setup);
 
 function setup() {
-
-  
 
   factory = new DLCreaturesFactory();
   let creatures = [];
@@ -44,6 +41,7 @@ function setup() {
 
   creatures.forEach(creature => {
     app.stage.addChild(creature);
+    creature.play();
   });
 
   predators.forEach(predator => {
@@ -66,7 +64,8 @@ function setup() {
     CONFIG.bRate = ccount * 3;
     $("#birthSlide").slider("value", CONFIG.bRate);
     $("#birthRate").html(CONFIG.bRate);
-    CONFIG.pRate = ccount * Math.pow(ccount, -2) * 1000;
+    let pRate = ccount * Math.pow(ccount, -2) * 1000;
+    CONFIG.pRate = Math.round(pRate, 0);
     $("#predationSlide").slider("value", CONFIG.pRate);
     $("#predationRate").html(CONFIG.pRate);
 
